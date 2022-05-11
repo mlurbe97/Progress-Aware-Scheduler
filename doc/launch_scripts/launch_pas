@@ -1,0 +1,35 @@
+#!/bin/bash
+
+## Progress-Aware-Scheduler implementation.
+## Year: 2021
+## Author: Manel Lurbe Sempere <malursem@gap.upv.es>.
+
+echo ''
+echo 'Progress-Aware-Scheduler implementation. Year: 2021 Author: Manel Lurbe Sempere <malursem@gap.upv.es>.'
+echo ''
+
+dscr_array="130" # ON(U2P2) OFF
+
+directory=$(date "+%Y_%m_%d_%H_%M_%S")
+mkdir /home/malursem/working_dir/PAS_res/${directory}
+mkdir /home/malursem/working_dir/PAS_res/${directory}/multicore
+
+{ ./start_Experiments.sh; }
+
+for workload in {2..25} #Test 1
+do
+   for dscr in $dscr_array
+   do
+      sudo ./PAS -o "/home/malursem/working_dir/PAS_res/${directory}/multicore/trabajo[${workload}]conf[${dscr}]rep[0]core" -A $workload -C $dscr 2>> /home/malursem/working_dir/PAS_res/${directory}/multicore/outTrabajo[${workload}]conf[${dscr}]rep[0].txt
+   done
+done
+
+for workload in {186..257} #Test 2, 3 y 4
+do
+   for dscr in $dscr_array
+   do
+      sudo ./PAS -o "/home/malursem/working_dir/PAS_res/${directory}/multicore/trabajo[${workload}]conf[${dscr}]rep[0]core" -A $workload -C $dscr 2>> /home/malursem/working_dir/PAS_res/${directory}/multicore/outTrabajo[${workload}]conf[${dscr}]rep[0].txt
+   done
+done
+
+{ ./end_Experiments.sh; }
